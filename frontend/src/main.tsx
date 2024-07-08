@@ -4,13 +4,26 @@ import App from './App.tsx'
 import './index.css'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import About from './pages/About.tsx'
+import { createTheme, ThemeProvider } from '@mui/material'
+
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
+        }
+      }
+    },
+  }
+});
 
 const router = createBrowserRouter(
   [
     {
       path: '/',
       element: <App />,
-      children:[
+      children: [
         {
           path: '/',
           element: <Navigate to="/posts" />
@@ -34,6 +47,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 )
