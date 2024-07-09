@@ -1,15 +1,27 @@
 
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import './App.css'
 import { Box } from '@mui/material'
 import ResponsiveAppBar from './components/ResponsiveAppBar'
+import React from 'react';
+import { observer } from 'mobx-react-lite';
+import GlobalMessage from './components/GlobalMessage';
 
 function App() {
+  const navigate = useNavigate();
+
+  const onClickRegister = () => {
+    navigate('/register');
+  };
+
 
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <ResponsiveAppBar />
+
+      <GlobalMessage />
+
+      <ResponsiveAppBar onClickRegister={onClickRegister} />
       <Box sx={{ flex: 1,  display:'flex' }}>
 
         <Outlet />
@@ -23,4 +35,4 @@ function App() {
   )
 }
 
-export default App
+export default observer(App)

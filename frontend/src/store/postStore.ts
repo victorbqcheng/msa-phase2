@@ -1,4 +1,3 @@
-// blogStore.js
 import { makeAutoObservable } from 'mobx';
 import { Post } from '../DataTypes';
 

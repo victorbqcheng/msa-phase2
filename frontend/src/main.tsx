@@ -7,6 +7,7 @@ import About from './pages/About.tsx'
 import { createTheme, ThemeProvider } from '@mui/material'
 import PostList from './pages/PostList.tsx'
 import PostContent from './pages/PostContent.tsx'
+import Register from './pages/Register.tsx'
 
 const theme = createTheme({
   components: {
@@ -37,6 +38,10 @@ const router = createBrowserRouter(
         {
           path: '/posts/:id',
           element: <PostContent />
+        },
+        {
+          path: '/register',
+          element: <Register />
         },
         {
           path: '/about',
