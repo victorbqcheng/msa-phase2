@@ -6,6 +6,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import About from './pages/About.tsx'
 import { createTheme, ThemeProvider } from '@mui/material'
 import PostList from './pages/PostList.tsx'
+import PostContent from './pages/PostContent.tsx'
 
 const theme = createTheme({
   components: {
@@ -35,7 +36,7 @@ const router = createBrowserRouter(
         },
         {
           path: '/posts/:id',
-          element: <div>post</div>
+          element: <PostContent />
         },
         {
           path: '/about',

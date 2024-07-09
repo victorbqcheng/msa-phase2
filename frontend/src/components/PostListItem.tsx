@@ -1,15 +1,13 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import React from 'react'
+import { Post } from '../DataTypes';
 
 type PostListItemProps = {
-    title: string;
-    description: string;
-    author: string;
-    date: string;
+    post?: Post;
     onClick?: () => void;
 };
 
-const PostListItem = ({ title, description, author, date, onClick }: PostListItemProps) => {
+const PostListItem = ({ post, onClick }: PostListItemProps) => {
     return (
         <Card onClick={onClick} sx={{ marginBottom: 2, cursor: 'pointer' }}>
             <CardContent>
@@ -19,13 +17,13 @@ const PostListItem = ({ title, description, author, date, onClick }: PostListIte
                     </Grid>
 
                     <Grid item xs>
-                        <Typography variant="h6">{title}</Typography>
+                        <Typography variant="h6">{post?.title}</Typography>
                         <div style={{ maxWidth: '90%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {description}
+                            {post?.content}
                         </div>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography variant="body2">author: {author}</Typography>
-                            <Typography variant="body2">{date}</Typography>
+                            <Typography variant="body2">author: {post?.authorName}</Typography>
+                            <Typography variant="body2">{post?.createdAt}</Typography>
                         </Box>
                     </Grid>
                 </Grid>

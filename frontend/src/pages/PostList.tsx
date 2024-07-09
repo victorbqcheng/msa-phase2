@@ -1,14 +1,19 @@
 import { Box, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Post } from '../dataTypes';
 import axios from 'axios';
 import PostListItem from '../components/PostListItem';
+import { Post } from '../DataTypes';
+import { apiUrl } from '../Config';
+import { useNavigate } from 'react-router-dom';
+import postStore from '../store/postStore';
 
 const PostList = () => {
 
     const [posts, setPosts] = useState<Post[]>([]);
+    const navigate = useNavigate();
+
     const fetchData = async () => {
-        const url = 'https://localhost:7247/api/Posts';
+        const url =  apiUrl + 'posts';
         
         axios.get(url)
             .then(response => {
@@ -20,6 +25,13 @@ const PostList = () => {
     useEffect(()=>{
         fetchData();
     }, []);
+
+    const onItemClick = (post: Post) => {
+        console.log(post);
+        postStore.selectPost(post);
+        navigate(`/posts/${post.id}`, { state: post });
+    };
+
     return (
         <>
             {/* Main Content */}
@@ -31,10 +43,8 @@ const PostList = () => {
                         {posts.map((post, index) => (
                             <PostListItem
                                 key={index}
-                                title={post.title}
-                                description={post.content}
-                                author={post.authorName}
-                                date={post.createdAt}
+                                post={post}
+                                onClick={() => onItemClick(post)}
                             />
                         ))}
                     </Box>
