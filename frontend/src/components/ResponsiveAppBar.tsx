@@ -26,7 +26,7 @@ type Props = {
     onClickRegister?: () => void;
     onClickUserProfile?: () => void;
     onClickLogout?: () => void;
-    userName?: string|null;
+    userName?: string | null;
 };
 
 const pages: Page[] = [
@@ -111,12 +111,12 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister, onClickUserProfile, o
                     </Box>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                            <Avatar src={BlogIcon} />
+                        <Avatar src={BlogIcon} />
                     </Box>
 
                     {/* ------------------md screen---------------------- */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <Avatar src={BlogIcon} />
+                        <Avatar src={BlogIcon} />
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex', flexGrow: 1 } }}>
                         {
@@ -146,10 +146,10 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister, onClickUserProfile, o
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
                                 >
-                                    <MenuItem onClick={()=>{onClickUserProfile?.(); handleCloseUserMenu();}}>
+                                    <MenuItem onClick={() => { onClickUserProfile?.(); handleCloseUserMenu(); }}>
                                         <Typography textAlign="center">Profile</Typography>
                                     </MenuItem>
-                                    <MenuItem onClick={()=>{onClickLogout?.(), handleCloseUserMenu()}}>
+                                    <MenuItem onClick={() => { onClickLogout?.(), handleCloseUserMenu() }}>
                                         <Typography textAlign="center">Logout</Typography>
                                     </MenuItem>
                                 </Menu>
