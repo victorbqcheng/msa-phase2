@@ -27,7 +27,6 @@ const PostList = () => {
     }, []);
 
     const onItemClick = (post: Post) => {
-        console.log(post);
         postStore.selectPost(post);
         navigate(`/posts/${post.id}`, { state: post });
     };
