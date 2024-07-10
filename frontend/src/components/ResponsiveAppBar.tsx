@@ -24,6 +24,9 @@ type Page = {
 type Props = {
     onClickLogin?: () => void;
     onClickRegister?: () => void;
+    onClickUserProfile?: () => void;
+    onClickLogout?: () => void;
+    userName?: string|null;
 };
 
 const pages: Page[] = [
@@ -37,9 +40,11 @@ const pages: Page[] = [
     }
 ];
 
-function ResponsiveAppBar({ onClickLogin, onClickRegister }: Props) {
+function ResponsiveAppBar({ onClickLogin, onClickRegister, onClickUserProfile, onClickLogout, userName }: Props) {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const loginButtonRef = React.useRef<HTMLButtonElement>(null);
+    const userButtonRef = React.useRef<HTMLButtonElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -49,7 +54,18 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister }: Props) {
         setAnchorElNav(null);
     };
 
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        userButtonRef.current?.blur();
+        setAnchorElUser(event.currentTarget);
+    };
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
+    const _onClickLogin = () => {
+        loginButtonRef.current?.blur();
+        onClickLogin?.();
+    };
     return (
         <AppBar position="static">
             <Container maxWidth={false}>
@@ -95,12 +111,12 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister }: Props) {
                     </Box>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <Avatar src={BlogIcon} />
+                            <Avatar src={BlogIcon} />
                     </Box>
 
                     {/* ------------------md screen---------------------- */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <Avatar src={BlogIcon} />
+                            <Avatar src={BlogIcon} />
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex', flexGrow: 1 } }}>
                         {
@@ -110,12 +126,41 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister }: Props) {
                         }
                     </Box>
                     {/* ---------------------------------------- */}
-                    
-            
-                    <Button sx={{ color: 'white' }} onClick={() => onClickLogin?.()}>Login</Button>
-                    <Button sx={{ color: 'white' }} onClick={() => onClickRegister?.() }>Register</Button>
-                        
-                    
+                    {
+                        userName ? (
+                            <>
+                                <Button ref={userButtonRef} sx={{ color: 'white' }} onClick={handleOpenUserMenu}>{userName}</Button>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    <MenuItem onClick={()=>{onClickUserProfile?.(); handleCloseUserMenu();}}>
+                                        <Typography textAlign="center">Profile</Typography>
+                                    </MenuItem>
+                                    <MenuItem onClick={()=>{onClickLogout?.(), handleCloseUserMenu()}}>
+                                        <Typography textAlign="center">Logout</Typography>
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                        ) : (
+                            <>
+                                <Button sx={{ color: 'white' }} ref={loginButtonRef} onClick={_onClickLogin}>Login</Button>
+                                <Button sx={{ color: 'white' }} onClick={() => onClickRegister?.()}>Register</Button>
+                            </>)
+                    }
+
                 </Toolbar>
             </Container>
         </AppBar>

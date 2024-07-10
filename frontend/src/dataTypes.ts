@@ -5,3 +5,9 @@ export type Post = {
     authorName: string,
     createdAt: string;
 };
+
+export type User = {
+    id:string;
+    userName:string;
+    email:string;
+};

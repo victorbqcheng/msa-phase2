@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material'
 import PostList from './pages/PostList.tsx'
 import PostContent from './pages/PostContent.tsx'
 import Register from './pages/Register.tsx'
+import UserProfile from './pages/UserProfile.tsx'
 
 const theme = createTheme({
   components: {
@@ -42,6 +43,10 @@ const router = createBrowserRouter(
         {
           path: '/register',
           element: <Register />
+        },
+        {
+          path: '/user/:id',
+          element: <UserProfile />
         },
         {
           path: '/about',
