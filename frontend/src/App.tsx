@@ -11,6 +11,7 @@ import axios from 'axios';
 import stateStore from './store/stateStore';
 import { apiUrl } from './Config';
 import userStore from './store/userStore';
+import Footer from './components/Footer';
 
 function App() {
   const navigate = useNavigate();
@@ -72,9 +73,7 @@ function App() {
 
       </Box>
       {/* Footer */}
-      <Box sx={{ flex: 0, borderTop: '1px solid #ccc', padding: 2, textAlign: 'center' }}>
-        footer
-      </Box>
+      <Footer />
     </Box>
   )
 }
