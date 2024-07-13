@@ -1,6 +1,5 @@
-import { Snackbar } from '@mui/material'
-import React from 'react'
-import stateStore from '../store/stateStore'
+import { Snackbar } from '@mui/material';
+import stateStore from '../store/stateStore';
 import { observer } from 'mobx-react-lite';
 
 const GlobalMessage = () => {

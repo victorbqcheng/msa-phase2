@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar, Box, Button, Card, CardContent, Container, IconButton, Stack, Typography } from '@mui/material'
 
 import { Post } from '../DataTypes'

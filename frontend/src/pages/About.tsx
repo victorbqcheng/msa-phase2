@@ -1,9 +1,12 @@
-import React from 'react'
+import { Container } from '@mui/material'
+
 
 const About = () => {
-  return (
-    <div>AboutPage</div>
-  )
+    return (
+        <Container>
+            AboutPage
+        </Container>
+    )
 }
 
 export default About

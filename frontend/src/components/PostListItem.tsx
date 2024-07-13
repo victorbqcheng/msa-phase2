@@ -1,5 +1,4 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
-import React from 'react'
 import { Post } from '../DataTypes';
 
 type PostListItemProps = {
