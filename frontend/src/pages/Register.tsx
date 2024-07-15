@@ -4,6 +4,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../Config';
 import stateStore from '../store/stateStore';
+import userStore from '../store/userStore';
 
 const Register = () => {
     const [username, setUsername] = React.useState('');
@@ -17,8 +18,9 @@ const Register = () => {
         
         const url = apiUrl + "account/register";
         axios.post(url, {username, email, password})
-        .then(_res => {
+        .then(res => {
             stateStore.setOpenSnackbar(true, "Register successfully");
+            userStore.setUser(res.data);
             navigate('/');
         })
         .catch(_err => {
