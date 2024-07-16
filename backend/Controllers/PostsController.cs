@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Model;
+using OpenAI.Chat;
 
 namespace backend.Controllers
 {
@@ -15,10 +16,12 @@ namespace backend.Controllers
     public class PostsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public PostsController(AppDbContext context)
+        public PostsController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Posts
@@ -47,6 +50,21 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<Post>>> GetPostsByAuthor(Guid authorId)
         {
             return await _context.Posts.Where(p => p.AuthorId == authorId).ToListAsync();
+        }
+
+        // Generate post's title
+        [HttpPost("title")]
+        public async Task<IActionResult> GeneratePostTitle([FromBody] Post post)
+        {
+            string? apikey = _configuration.GetValue<string>("OpenAiApiKey");
+            if (apikey == null || apikey == "")
+            {
+                return BadRequest("OpenAI API key is not set");
+            }
+            string instruction = "Generate a title for the following content:\r\n";
+            ChatClient client = new(model: "gpt-4o", apikey);
+            ChatCompletion completion = await client.CompleteChatAsync(instruction + post.Content);
+            return Ok(completion.ToString());
         }
 
         // PUT: api/Posts/5
