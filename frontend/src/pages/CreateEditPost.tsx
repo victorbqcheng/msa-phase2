@@ -14,11 +14,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Post } from '../DataTypes';
 import { apiUrl } from '../Config';
 import stateStore from '../store/stateStore';
+import GenerateTitleButton from '../components/GenerateTitleButton';
 
 
 const CreateEditPost = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [isThinking, setIsThinking] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -28,6 +30,21 @@ const CreateEditPost = () => {
             setContent((location.state as Post).content);
         }
     }, []);
+
+    const onGenerateTitle = () => {
+        const url = apiUrl + 'Posts/title';
+        setIsThinking(true);
+        axios.post(url, {content})
+        .then(_res=>{
+            setIsThinking(false);
+            console.log("_res:", _res);
+            setTitle(_res.data);
+        })
+        .catch(_err=>{
+            setIsThinking(false);
+            console.log("_err:", _err);
+        });
+    };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -78,6 +95,9 @@ const CreateEditPost = () => {
                             autoFocus
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
+                            InputProps={{
+                                endAdornment: content && !title ? <GenerateTitleButton onClick={onGenerateTitle} isThinking={isThinking}/> :null
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -93,7 +113,6 @@ const CreateEditPost = () => {
                         />
                         <Button
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
                             type='submit'
                         >
                             {location.state ? 'Update ' : 'Publish '}Post
