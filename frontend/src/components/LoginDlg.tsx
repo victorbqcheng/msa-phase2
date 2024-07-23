@@ -27,7 +27,10 @@ type Props = {
 const LoginDlg = ({ open, onLogin, onClose }: Props) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onLogin?.(username, password);
+    };
     return (
         <React.Fragment>
             <Dialog
@@ -52,7 +55,7 @@ const LoginDlg = ({ open, onLogin, onClose }: Props) => {
                 </IconButton>
                 <DialogContent>
                     <Container maxWidth="xs">
-                        <Box component="form">
+                        <Box component="form" onSubmit={onSubmit}>
                             <TextField
                                 margin="normal"
                                 required
@@ -82,7 +85,7 @@ const LoginDlg = ({ open, onLogin, onClose }: Props) => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mb: 2 }}
-                                onClick={() => onLogin?.(username, password)}
+                                type='submit'
                             >
                                 Login
                             </Button>
