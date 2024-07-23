@@ -2,6 +2,9 @@ import type { Preview } from "@storybook/react";
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material'
 import { BrowserRouter } from 'react-router-dom'
+import { initialize, mswLoader } from 'msw-storybook-addon';
+
+initialize();
 
 const theme = createTheme({
   components: {
@@ -35,6 +38,7 @@ const preview: Preview = {
       )
     }
   ],
+  loaders: [mswLoader],
 };
 
 export default preview;
