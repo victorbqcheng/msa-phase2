@@ -4,7 +4,7 @@ on:
     branches:
     - main
     paths:
-        - 'backend/**'
+        - 'backend/**'  # Triggered only when files in the backend directory change
 env:
   AZURE_WEBAPP_NAME: msa-phrase-backend20240715
   AZURE_WEBAPP_PACKAGE_PATH: .\publish

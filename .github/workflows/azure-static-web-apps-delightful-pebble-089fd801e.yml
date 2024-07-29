@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - 'frontend/**'  # Triggered only when files in the frontend directory change
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:

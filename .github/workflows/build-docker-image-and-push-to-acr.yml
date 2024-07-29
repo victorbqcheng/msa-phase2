@@ -1,0 +1,30 @@
+name: build docker image and push to acr
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'backend/**'
+  workflow_dispatch:        # trigger manually
+  
+
+# Web API Development with ASP. NET Core 8 - Chapter 14 - Page 620:621
+jobs:
+  docker_build_and_push:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+    - uses: actions/checkout@v4
+    - name: login to acr
+      uses: azure/docker-login@v1
+      with: 
+        login-server: ${{ secrets.REGISTRY_USERNAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: build docker image and push to acr
+      working-directory: ./backend
+      run: |
+        docker build . -t victorchengcr.azurecr.io/msaphase2backend:latest -t victorchengcr.azurecr.io/msaphase2backend:v${{github.run_number}}
+        docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/msaphase2backend:latest
+        docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/msaphase2backend:v${{github.run_number}}
+    
