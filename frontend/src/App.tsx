@@ -46,6 +46,9 @@ function App() {
         setOpenLoginDlg(false);
         stateStore.setOpenSnackbar(true, "Login successfully");
         userStore.setUser(res.data);
+        // navigate to home page
+        if (location.pathname !== '/posts')
+          navigate('/posts');
       }
     } catch (error: any) {
       // as type assertion
