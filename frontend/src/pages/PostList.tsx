@@ -1,11 +1,13 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import PostListItem from '../components/PostListItem';
 import { Post } from '../DataTypes';
 import { apiUrl } from '../Config';
 import { useNavigate } from 'react-router-dom';
 import postStore from '../store/postStore';
+import stateStore from '../store/stateStore';
+import { handleAxiosError } from '../utils/utils';
 
 const PostList = () => {
 
@@ -15,12 +17,14 @@ const PostList = () => {
     const fetchData = async () => {
         const url =  apiUrl + 'posts';
         
-        axios.get(url)
-            .then(response => {
-                console.log("response:", response);
-                setPosts(response.data);
-            })
-            .catch(error => console.error('Error fetching data: ', error));
+        try {
+            const response = await axios.get(url);
+            const posts = response.data;
+            setPosts(posts);
+        } catch (error) {
+            const errMsg = handleAxiosError(error as AxiosError);
+            stateStore.setOpenSnackbar(true, errMsg);
+        }
     };
     useEffect(()=>{
         fetchData();

@@ -10,6 +10,7 @@ const user:User = {
     id: 'B347E894-213E-401A-A5DE-69CA7D96F3E9',
     userName: 'victorcheng',
     email: 'email@example.com',
+    token: 'token'
 };
 
 const posts:Post[] = [

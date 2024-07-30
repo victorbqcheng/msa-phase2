@@ -10,6 +10,7 @@ const user:User = {
     id: 'F953EEEE-EF90-4E3C-BF8C-A0F917580227',
     userName: 'John Doe',
     email: 'email',
+    token: 'token'
 };
 
 const meta: Meta<typeof Register> = {
