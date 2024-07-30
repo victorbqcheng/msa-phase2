@@ -15,7 +15,7 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
                         <Avatar />
                     </Grid>
 
-                    <Grid item xs>
+                    <Grid item xs zeroMinWidth>
                         <Typography variant="h6">{post?.title}</Typography>
                         <div style={{ maxWidth: '90%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {post?.content}
