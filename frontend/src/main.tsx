@@ -10,6 +10,17 @@ import PostContent from './pages/PostContent.tsx'
 import Register from './pages/Register.tsx'
 import UserProfile from './pages/UserProfile.tsx'
 import CreateEditPost from './pages/CreateEditPost.tsx'
+import Auth from './pages/Auth.tsx'
+import axios from 'axios'
+import userStore from './store/userStore.ts'
+
+axios.interceptors.request.use((config)=>{
+  const token = userStore.user?.token;
+  if(token){
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const theme = createTheme({
   components: {
@@ -47,11 +58,11 @@ const router = createBrowserRouter(
         },
         {
           path: '/user/:id',
-          element: <UserProfile />
+          element: <Auth><UserProfile /></Auth>
         },
         {
           path: '/createeditpost',
-          element: <CreateEditPost />
+          element: <Auth><CreateEditPost /></Auth>
         },
         {
           path: '/about',
