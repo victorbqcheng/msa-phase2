@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Model;
 using OpenAI.Chat;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostsController : ControllerBase
@@ -25,6 +27,7 @@ namespace backend.Controllers
         }
 
         // GET: api/Posts
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
@@ -32,6 +35,7 @@ namespace backend.Controllers
         }
 
         // GET: api/Posts/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(Guid id)
         {
