@@ -13,7 +13,7 @@ const PostContent = () => {
                 </Box>
 
                 <Box sx={{ marginTop: 5 }}>
-                    <Typography variant="body1">{postStore.selectedPost?.content}</Typography>
+                    <Typography variant="body1" sx={{whiteSpace:'pre-wrap'}}>{postStore.selectedPost?.content}</Typography>
                 </Box>
             </Box>
         </Container>
