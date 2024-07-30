@@ -5,6 +5,12 @@ on:
     - main
     paths:
         - 'backend/**'  # Triggered only when files in the backend directory change
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+    paths:
+      - 'backend/**'
 env:
   AZURE_WEBAPP_NAME: msa-phrase-backend20240715
   AZURE_WEBAPP_PACKAGE_PATH: .\publish
