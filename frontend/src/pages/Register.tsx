@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../Config';
 import stateStore from '../store/stateStore';
 import userStore from '../store/userStore';
+import { handleAxiosError } from '../utils/utils';
 
 const Register = () => {
     const [username, setUsername] = React.useState('');
@@ -23,8 +24,9 @@ const Register = () => {
             userStore.setUser(res.data);
             navigate('/');
         })
-        .catch(_err => {
-            stateStore.setOpenSnackbar(true, "Registration failed");
+        .catch(error => {
+            const errMsg = handleAxiosError(error);
+            stateStore.setOpenSnackbar(true, "Register failed:" + errMsg);
         })
     };
     return (

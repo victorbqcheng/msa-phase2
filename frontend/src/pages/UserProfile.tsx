@@ -9,7 +9,7 @@ import userStore from '../store/userStore'
 import { apiUrl } from '../Config'
 import stateStore from '../store/stateStore'
 import postStore from '../store/postStore'
-import { formatDateTime } from '../utils/utils'
+import { formatDateTime, handleAxiosError } from '../utils/utils'
 
 
 const UserProfile = () => {
@@ -29,7 +29,10 @@ const UserProfile = () => {
                 console.log("response:", response);
                 setPosts(response.data);
             })
-            .catch(error => console.error('Error fetching data: ', error));
+            .catch(error => {
+                const errMsg = handleAxiosError(error);
+                stateStore.setOpenSnackbar(true, "Error fetching data:" + errMsg);
+            });
     };
     useEffect(() => {
         fetchData();
@@ -43,8 +46,9 @@ const UserProfile = () => {
                 setPosts(newPosts);
                 stateStore.setOpenSnackbar(true, "Delete successfully");
             })
-            .catch(_error => {
-                stateStore.setOpenSnackbar(true, "Failed to delete");
+            .catch(error => {
+                const errMsg = handleAxiosError(error);
+                stateStore.setOpenSnackbar(true, "Failed to delete:" + errMsg);
             });
     };
 
