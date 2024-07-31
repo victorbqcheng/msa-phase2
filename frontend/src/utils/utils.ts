@@ -15,4 +15,10 @@ export const handleAxiosError = (error: AxiosError) => {
     return message;
 };
 
-
+export const formatDateTime = (datetime?:string):string=>{
+    if(!datetime) return '';
+    datetime = datetime.replace('T',' ');
+    let parts = datetime.split(':');
+    let result = parts.slice(0, -1).join(":"); 
+    return result;
+};

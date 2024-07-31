@@ -9,6 +9,7 @@ import userStore from '../store/userStore'
 import { apiUrl } from '../Config'
 import stateStore from '../store/stateStore'
 import postStore from '../store/postStore'
+import { formatDateTime } from '../utils/utils'
 
 
 const UserProfile = () => {
@@ -94,7 +95,7 @@ const PostItem = ({ post, onDelete, onEdit, onClick }: PostItemProps) => {
                     <Box onClick={onClick}
                         sx={{flex: 1, maxWidth: '90%', justifyContent: 'space-around', display: 'flex', flexDirection: 'column', cursor:'pointer' }}>
                         <Typography variant='h6' sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{post?.title}</Typography>
-                        <Typography variant='body2' sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{post?.createdAt}</Typography>
+                        <Typography variant='body2' sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{formatDateTime(post?.createdAt)}</Typography>
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'column' }}>
                         <IconButton onClick={onDelete}><DeleteOutline /> </IconButton>

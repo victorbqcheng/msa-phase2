@@ -1,12 +1,13 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import { Post } from '../DataTypes';
+import { formatDateTime } from '../utils/utils';
 
 type PostListItemProps = {
     post?: Post;
     onClick?: () => void;
 };
 
-const PostListItem = ({ post, onClick }: PostListItemProps) => {
+const PostListItem = ({ post, onClick }: PostListItemProps) => {    
     return (
         <Card onClick={onClick} sx={{ marginBottom: 2, cursor: 'pointer' }}>
             <CardContent>
@@ -22,7 +23,7 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
                         </div>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography variant="body2">author: {post?.authorName}</Typography>
-                            <Typography variant="body2">{post?.createdAt}</Typography>
+                            <Typography variant="body2">{formatDateTime(post?.createdAt)}</Typography>
                         </Box>
                     </Grid>
                 </Grid>
