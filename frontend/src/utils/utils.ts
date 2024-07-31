@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 
-export const handleAxiosError = (error: AxiosError) => {
+export const handleAxiosError = (error: AxiosError):string => {
     let message = 'An error occurred, please try again later.';
     if (error.response) {
         // The request has been sent, but the server responded with a non-2xx status code

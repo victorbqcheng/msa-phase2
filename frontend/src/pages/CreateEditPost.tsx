@@ -15,6 +15,7 @@ import { Post } from '../DataTypes';
 import { apiUrl } from '../Config';
 import stateStore from '../store/stateStore';
 import GenerateTitleButton from '../components/GenerateTitleButton';
+import { handleAxiosError } from '../utils/utils';
 
 
 const CreateEditPost = () => {
@@ -58,8 +59,9 @@ const CreateEditPost = () => {
                     stateStore.setOpenSnackbar(true, "Updated successfully!");
                     navigate('/user/' + userStore.user?.id, { replace: true });
                 })
-                .catch(_err => {
-                    return stateStore.setOpenSnackbar(true, "Failed to update");
+                .catch(error => {
+                    const errMsg = handleAxiosError(error);
+                    stateStore.setOpenSnackbar(true, "Failed to update:" + errMsg);
                 });
 
         } else {
@@ -70,8 +72,9 @@ const CreateEditPost = () => {
                     stateStore.setOpenSnackbar(true, "Publish successfully!");
                     navigate('/user/' + userStore.user?.id, { replace: true });
                 })
-                .catch(_err => {
-                    return stateStore.setOpenSnackbar(true, "Failed to publish");
+                .catch(error => {
+                    const errMsg = handleAxiosError(error);
+                    stateStore.setOpenSnackbar(true, "Failed to publish:" + errMsg);
                 });
         }
 
