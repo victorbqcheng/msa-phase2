@@ -67,6 +67,58 @@ public class AccountController : ControllerBase
         }
         return BadRequest(new { error = "Invalid user name or password" });
     }
+    [HttpPost("refresh-token")]
+    public IActionResult RefreshToken([FromBody] string expiredToken)
+    {
+        if(expiredToken is null)
+        {
+            return BadRequest(new { error = "Token is required" });
+        }
+        var principal = GetPrincipalFromExpiredToken(expiredToken);
+        if (principal is null)
+        {
+            return BadRequest(new { error = "Invalid token" });
+        }
+        var userName = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        if (userName is null || userName == "")
+        {
+            return BadRequest(new { error = "Invalid token: no username" });
+        }
+        var newToken = GenerateToken(userName);
+        return Ok(new { newToken });
+    }
+
+    private ClaimsPrincipal? GetPrincipalFromExpiredToken(string token)
+    {
+        string? secret = _configuration["JwtConfig:Secret"];
+        if (secret is null)
+        {
+            return null;
+        }
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+            ValidateLifetime = false
+        };
+        try {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            return principal;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 
     private string? GenerateToken(string userName)
     {
@@ -88,7 +140,7 @@ public class AccountController : ControllerBase
             {
                 new(ClaimTypes.Name, userName),
             }),
-            Expires = null,
+            Expires = DateTime.Now.AddMinutes(3),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Issuer = issuer,
             Audience = audience
