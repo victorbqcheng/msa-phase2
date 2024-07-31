@@ -60,7 +60,6 @@ const LoginDlg = ({ open, onLogin, onClose }: Props) => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="username"
                                 label="username"
                                 name="username"
                                 autoComplete="username"
@@ -75,7 +74,6 @@ const LoginDlg = ({ open, onLogin, onClose }: Props) => {
                                 name="password"
                                 label="password"
                                 type="password"
-                                id="password"
                                 autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}

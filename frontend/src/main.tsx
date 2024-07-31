@@ -14,9 +14,23 @@ import Auth from './pages/Auth.tsx'
 import axios from 'axios'
 import userStore from './store/userStore.ts'
 
+// Check if token has expired
+function checkTokenExpiry(token:string):boolean {
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  const expiry = payload.exp;
+  const now = Math.floor(Date.now() / 1000);
+  return now > expiry;
+}
+
 axios.interceptors.request.use((config)=>{
   const token = userStore.user?.token;
   if(token){
+    if(checkTokenExpiry(token)){
+      alert('Token expired');
+      window.location.href = '/';
+      userStore.setUser(null);
+      return Promise.reject({message: 'Token expired'});
+    }
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

@@ -88,7 +88,7 @@ public class AccountController : ControllerBase
             {
                 new(ClaimTypes.Name, userName),
             }),
-            Expires = null,
+            Expires = DateTime.Now.AddDays(7),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Issuer = issuer,
             Audience = audience
