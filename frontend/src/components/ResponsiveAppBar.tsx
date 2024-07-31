@@ -102,8 +102,8 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister, onClickUserProfile, o
                         >
                             {
                                 pages.map((page) => (
-                                    <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center"><Link style={{ textDecoration: 'none' }} to={page.href}>{page.title}</Link></Typography>
+                                    <MenuItem key={page.title} onClick={handleCloseNavMenu} sx={{p:0}}>
+                                        <Link style={{ textDecoration: 'none', padding:'10px' }} to={page.href}>{page.title}</Link>
                                     </MenuItem>
                                 ))
                             }
@@ -121,7 +121,7 @@ function ResponsiveAppBar({ onClickLogin, onClickRegister, onClickUserProfile, o
                     <Box sx={{ display: { xs: 'none', md: 'flex', flexGrow: 1 } }}>
                         {
                             pages.map((page) => (
-                                <Button key={page.title} sx={{ mx: 2, color: 'white', display: 'block' }}><Link style={{ textDecoration: 'none' }} to={page.href}>{page.title}</Link></Button>
+                                <Button key={page.title} sx={{ mx: 2, color: 'white', p:0 }}><Link style={{ textDecoration: 'none', width:'100%' }} to={page.href}>{page.title}</Link></Button>
                             ))
                         }
                     </Box>
