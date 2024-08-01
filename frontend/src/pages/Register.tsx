@@ -38,7 +38,6 @@ const Register = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
                         label="username"
                         name="username"
                         autoComplete="username"
@@ -64,7 +63,6 @@ const Register = () => {
                         name="password"
                         label="password"
                         type="password"
-                        id="password"
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
