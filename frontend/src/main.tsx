@@ -11,6 +11,7 @@ import Register from './pages/Register.tsx'
 import UserProfile from './pages/UserProfile.tsx'
 import CreateEditPost from './pages/CreateEditPost.tsx'
 import Auth from './pages/Auth.tsx'
+import NotFound from './pages/NotFound.tsx'
 
 
 
@@ -31,9 +32,10 @@ const router = createBrowserRouter(
     {
       path: '/',
       element: <App />,
+      errorElement: <NotFound />,
       children: [
         {
-          path: '/',
+          index:true,
           element: <Navigate to="/posts" />
         },
         {
