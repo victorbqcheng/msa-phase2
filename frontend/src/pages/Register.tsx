@@ -3,14 +3,15 @@ import axios from 'axios';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../Config';
-import stateStore from '../store/stateStore';
 import userStore from '../store/userStore';
 import { handleAxiosError } from '../utils/utils';
+import { useToast } from '../components/ToastProvider';
 
 const Register = () => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [email, setEmail] = React.useState('');
+    const {showToast} = useToast();
 
     const navigate = useNavigate();
 
@@ -20,13 +21,13 @@ const Register = () => {
         const url = apiUrl + "account/register";
         axios.post(url, {username, email, password})
         .then(res => {
-            stateStore.setOpenSnackbar(true, "Register successfully");
+            showToast("Register successfully");
             userStore.setUser(res.data);
             navigate('/');
         })
         .catch(error => {
             const errMsg = handleAxiosError(error);
-            stateStore.setOpenSnackbar(true, "Register failed:" + errMsg);
+            showToast("Register failed:" + errMsg);
         })
     };
     return (

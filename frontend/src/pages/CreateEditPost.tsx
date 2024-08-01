@@ -13,9 +13,9 @@ import userStore from '../store/userStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Post } from '../DataTypes';
 import { apiUrl } from '../Config';
-import stateStore from '../store/stateStore';
 import GenerateTitleButton from '../components/GenerateTitleButton';
 import { handleAxiosError } from '../utils/utils';
+import { useToast } from '../components/ToastProvider';
 
 
 const CreateEditPost = () => {
@@ -24,6 +24,7 @@ const CreateEditPost = () => {
     const [isThinking, setIsThinking] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+    const {showToast} = useToast();
 
     useEffect(() => {
         if (location.state) {
@@ -56,12 +57,12 @@ const CreateEditPost = () => {
             const url = apiUrl + `Posts/${(location.state as Post).id}`;
             axios.put(url, { id: (location.state as Post).id, title, content, authorId: userStore.user?.id, authorName: userStore.user?.userName, createdAt: (location.state as Post).createdAt })
                 .then(_res => {
-                    stateStore.setOpenSnackbar(true, "Updated successfully!");
+                    showToast("Updated successfully!");
                     navigate('/user/' + userStore.user?.id, { replace: true });
                 })
                 .catch(error => {
                     const errMsg = handleAxiosError(error);
-                    stateStore.setOpenSnackbar(true, "Failed to update:" + errMsg);
+                    showToast("Failed to update:" + errMsg);
                 });
 
         } else {
@@ -69,12 +70,12 @@ const CreateEditPost = () => {
             const url = apiUrl + 'Posts';
             axios.post(url, { title, content, authorId: userStore.user?.id, authorName: userStore.user?.userName })
                 .then(_res => {
-                    stateStore.setOpenSnackbar(true, "Publish successfully!");
+                    showToast("Publish successfully!");
                     navigate('/user/' + userStore.user?.id, { replace: true });
                 })
                 .catch(error => {
                     const errMsg = handleAxiosError(error);
-                    stateStore.setOpenSnackbar(true, "Failed to publish:" + errMsg);
+                    showToast("Failed to publish:" + errMsg);
                 });
         }
 

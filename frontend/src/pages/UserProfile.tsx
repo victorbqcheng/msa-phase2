@@ -7,14 +7,15 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import userStore from '../store/userStore'
 import { apiUrl } from '../Config'
-import stateStore from '../store/stateStore'
 import postStore from '../store/postStore'
 import { formatDateTime, handleAxiosError } from '../utils/utils'
+import { useToast } from '../components/ToastProvider'
 
 
 const UserProfile = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState<Post[]>([]);
+    const {showToast} = useToast();
 
     useEffect(() => {
         if (!userStore.user) {
@@ -31,7 +32,7 @@ const UserProfile = () => {
             })
             .catch(error => {
                 const errMsg = handleAxiosError(error);
-                stateStore.setOpenSnackbar(true, "Error fetching data:" + errMsg);
+                showToast("Error fetching data:" + errMsg);
             });
     };
     useEffect(() => {
@@ -44,11 +45,11 @@ const UserProfile = () => {
             .then(_response => {
                 const newPosts = posts.filter(post => post.id !== id);
                 setPosts(newPosts);
-                stateStore.setOpenSnackbar(true, "Delete successfully");
+                showToast("Delete successfully");
             })
             .catch(error => {
                 const errMsg = handleAxiosError(error);
-                stateStore.setOpenSnackbar(true, "Failed to delete:" + errMsg);
+                showToast("Failed to delete:" + errMsg);
             });
     };
 

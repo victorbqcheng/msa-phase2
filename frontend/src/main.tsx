@@ -12,6 +12,7 @@ import UserProfile from './pages/UserProfile.tsx'
 import CreateEditPost from './pages/CreateEditPost.tsx'
 import Auth from './pages/Auth.tsx'
 import NotFound from './pages/NotFound.tsx'
+import ToastProvier from './components/ToastProvider.tsx'
 
 
 
@@ -35,7 +36,7 @@ const router = createBrowserRouter(
       errorElement: <NotFound />,
       children: [
         {
-          index:true,
+          index: true,
           element: <Navigate to="/posts" />
         },
         {
@@ -70,7 +71,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <ToastProvier>
+        <RouterProvider router={router} />
+      </ToastProvier>
     </ThemeProvider>
   </React.StrictMode>,
 )
