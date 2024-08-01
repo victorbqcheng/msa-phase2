@@ -14,7 +14,7 @@ const Footer = () => {
     <Box component="footer" sx={{borderTop: '1px solid #ccc0', bgcolor: 'background.paper', py: 3 }}>
       <Container maxWidth="lg">
         victor cheng © {currentYear} |
-        <Link href="https://github.com/victorbqcheng" color="inherit">
+        <Link href="https://github.com/victorbqcheng/msa-phase2" color="inherit">
           <IconButton color="primary">
             <GitHub />
           </IconButton>

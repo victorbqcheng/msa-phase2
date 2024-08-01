@@ -6,13 +6,14 @@ import { Post } from '../DataTypes';
 import { apiUrl } from '../Config';
 import { useNavigate } from 'react-router-dom';
 import postStore from '../store/postStore';
-import stateStore from '../store/stateStore';
 import { handleAxiosError } from '../utils/utils';
+import { useToast } from '../components/ToastProvider';
 
 const PostList = () => {
 
     const [posts, setPosts] = useState<Post[]>([]);
     const navigate = useNavigate();
+    const {showToast} = useToast();
 
     const fetchData = async () => {
         const url = apiUrl + 'posts';
@@ -23,7 +24,7 @@ const PostList = () => {
             setPosts(posts);
         } catch (error) {
             const errMsg = handleAxiosError(error as AxiosError);
-            stateStore.setOpenSnackbar(true, errMsg);
+            showToast(errMsg);
         }
     };
     useEffect(() => {
