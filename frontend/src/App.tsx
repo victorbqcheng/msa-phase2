@@ -12,6 +12,7 @@ import stateStore from './store/stateStore';
 import { apiUrl } from './Config';
 import userStore from './store/userStore';
 import Footer from './components/Footer';
+import AxiosWrapper from './components/AxiosWrapper';
 
 function App() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ function App() {
   };
 
   const onLogin = async (username: string, password: string) => {
-    console.log(username, password);
+    
     const loginUrl = apiUrl + "account/login";
     try {
       const res = await axios.post(loginUrl, { username, password });
@@ -58,7 +59,7 @@ function App() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-
+      <AxiosWrapper />
       <GlobalMessage />
 
       <ResponsiveAppBar
