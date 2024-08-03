@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Grid, Link, Paper, Stack, Typography } from '@mui/material'
+import { Box, Chip, Container, Grid, Link, Paper, Typography } from '@mui/material'
 
 
 const About = () => {
