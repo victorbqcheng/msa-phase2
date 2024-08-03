@@ -4,11 +4,11 @@ import CreateEditPost from './CreateEditPost';
 import { Post } from '../DataTypes';
 import { http, HttpResponse } from 'msw';
 import { apiUrl } from '../Config';
-import GlobalMessage from '../components/GlobalMessage';
+import ToastProvider from '../components/ToastProvider';
 
 
 
-const postData:Post = {
+const postData: Post = {
     id: '1',
     title: 'title',
     content: 'content',
@@ -18,15 +18,15 @@ const postData:Post = {
 
 const meta: Meta<typeof CreateEditPost> = {
     component: CreateEditPost,
-    parameters:{
+    parameters: {
         msw: {
-            handlers:[
-                http.post(apiUrl + 'Posts', ()=>{
+            handlers: [
+                http.post(apiUrl + 'Posts', () => {
                     console.log("apiUrl", apiUrl)
-                    return HttpResponse.json(postData, {status:201});
+                    return HttpResponse.json(postData, { status: 201 });
                 }),
-                http.put(apiUrl + 'Posts/:id', ()=>{
-                    return HttpResponse.json(postData, {status:200});
+                http.put(apiUrl + 'Posts/:id', () => {
+                    return HttpResponse.json(postData, { status: 200 });
                 })
             ]
         }
@@ -38,16 +38,17 @@ export default meta;
 type Story = StoryObj<typeof CreateEditPost>;
 
 export const CreatePost: Story = {
-    decorators:[
+    decorators: [
         () => {
             const navigate = useNavigate();
             return (
                 <>
-                    <button onClick={()=>navigate('createeditpost') }>click here</button>
-                    <GlobalMessage />
-                    <Routes>
-                        <Route path='createeditpost' element={<CreateEditPost />} />
-                    </Routes>
+                    <ToastProvider>
+                        <button onClick={() => navigate('createeditpost')}>click here</button>
+                        <Routes>
+                            <Route path='createeditpost' element={<CreateEditPost />} />
+                        </Routes>
+                    </ToastProvider>
                 </>
             )
         }
@@ -61,11 +62,12 @@ export const EditPost: Story = {
             const navigate = useNavigate();
             return (
                 <>
-                    <button onClick={()=>navigate('createeditpost', {state:postData}) }>click here</button>
-                    <GlobalMessage />
-                    <Routes>
-                        <Route path='createeditpost' element={<CreateEditPost />} />
-                    </Routes>
+                    <ToastProvider>
+                        <button onClick={() => navigate('createeditpost', { state: postData })}>click here</button>
+                        <Routes>
+                            <Route path='createeditpost' element={<CreateEditPost />} />
+                        </Routes>
+                    </ToastProvider>
                 </>
             )
         }
@@ -74,10 +76,10 @@ export const EditPost: Story = {
 };
 
 export const EditPostFailed: Story = {
-    parameters:{
+    parameters: {
         msw: {
-            handlers:[
-                http.put(apiUrl + 'Posts/:id', ()=>{
+            handlers: [
+                http.put(apiUrl + 'Posts/:id', () => {
                     return HttpResponse.error();
                 })
             ]
@@ -88,11 +90,12 @@ export const EditPostFailed: Story = {
             const navigate = useNavigate();
             return (
                 <>
-                    <button onClick={()=>navigate('createeditpost', {state:postData}) }>click here</button>
-                    <GlobalMessage />
-                    <Routes>
-                        <Route path='createeditpost' element={<CreateEditPost />} />
-                    </Routes>
+                    <ToastProvider>
+                        <button onClick={() => navigate('createeditpost', { state: postData })}>click here</button>
+                        <Routes>
+                            <Route path='createeditpost' element={<CreateEditPost />} />
+                        </Routes>
+                    </ToastProvider>
                 </>
             )
         }

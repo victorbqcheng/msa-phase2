@@ -2,11 +2,10 @@ import { Meta, StoryObj } from '@storybook/react'
 import Register from './Register';
 import { http, HttpResponse } from 'msw';
 import { apiUrl } from '../Config';
-
 import { User } from '../DataTypes';
-import GlobalMessage from '../components/GlobalMessage';
+import ToastProvider from '../components/ToastProvider';
 
-const user:User = {
+const user: User = {
     id: 'F953EEEE-EF90-4E3C-BF8C-A0F917580227',
     userName: 'John Doe',
     email: 'email',
@@ -15,22 +14,23 @@ const user:User = {
 
 const meta: Meta<typeof Register> = {
     component: Register,
-    parameters:{
+    parameters: {
         msw: {
-            handlers:[
-                http.post(apiUrl + 'account/register', ()=>{
+            handlers: [
+                http.post(apiUrl + 'account/register', () => {
                     console.log("apiUrl", apiUrl)
-                    return HttpResponse.json(user, {status:200});
+                    return HttpResponse.json(user, { status: 200 });
                 }),
             ]
         }
     },
     decorators: [
-        (Story)=>{
+        (Story) => {
             return (
                 <>
-                <GlobalMessage />
-                <Story />
+                    <ToastProvider>
+                        <Story />
+                    </ToastProvider>
                 </>
             );
         }
@@ -42,15 +42,15 @@ export default meta;
 type Story = StoryObj<typeof Register>;
 
 export const Default: Story = {
-    
+
 };
 
 export const RegisterFailed: Story = {
-    parameters:{
+    parameters: {
         msw: {
-            handlers:[
-                http.post(apiUrl + 'account/register', ()=>{
-                    return HttpResponse.json({userName:"user name is already taken"}, {status:400});
+            handlers: [
+                http.post(apiUrl + 'account/register', () => {
+                    return HttpResponse.json({ userName: "user name is already taken" }, { status: 400 });
                 }),
             ]
         }
