@@ -39,19 +39,16 @@ const CreateEditPost = () => {
         axios.post(url, {content})
         .then(_res=>{
             setIsThinking(false);
-            console.log("_res:", _res);
             setTitle(_res.data);
         })
         .catch(_err=>{
             setIsThinking(false);
-            console.log("_err:", _err);
         });
     };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         // Here you would typically send the data to your backend
-        console.log('Submitting:', { title, content });
         if (location.state) {
             // edit, http put
             const url = apiUrl + `Posts/${(location.state as Post).id}`;

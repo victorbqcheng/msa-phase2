@@ -22,7 +22,6 @@ const meta: Meta<typeof CreateEditPost> = {
         msw: {
             handlers: [
                 http.post(apiUrl + 'Posts', () => {
-                    console.log("apiUrl", apiUrl)
                     return HttpResponse.json(postData, { status: 201 });
                 }),
                 http.put(apiUrl + 'Posts/:id', () => {

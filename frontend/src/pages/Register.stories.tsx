@@ -18,7 +18,6 @@ const meta: Meta<typeof Register> = {
         msw: {
             handlers: [
                 http.post(apiUrl + 'account/register', () => {
-                    console.log("apiUrl", apiUrl)
                     return HttpResponse.json(user, { status: 200 });
                 }),
             ]

@@ -30,7 +30,6 @@ function App() {
   };
   const onClickLogout = () => {
     userStore.setUser(null);
-    console.log("location.pathname:", location.pathname);
     if (location.pathname !== '/posts')
       navigate('/posts');
   };
@@ -40,7 +39,6 @@ function App() {
     const loginUrl = apiUrl + "account/login";
     try {
       const res = await axios.post(loginUrl, { username, password });
-      console.log(res);
 
       if (res.status === 200) {
         res.data.token;

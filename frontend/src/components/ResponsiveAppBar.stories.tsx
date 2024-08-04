@@ -19,8 +19,7 @@ const meta: Meta<typeof ResponsiveAppBar> = {
         onClickLogout: fn()
     },
     decorators: [
-        (Story, { parameters }) => {
-            console.log("parameters:", parameters);
+        (Story) => {
             return (
                 <>
                     <Story />

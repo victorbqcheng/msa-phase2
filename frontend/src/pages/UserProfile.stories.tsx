@@ -43,7 +43,6 @@ const meta: Meta<typeof UserProfile> = {
     decorators:[
         (Story)=>{
             useEffect(()=>{
-                console.log('setUser');
                 userStore.setUser(user);
             }, []);
             return (
