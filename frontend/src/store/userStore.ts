@@ -13,7 +13,6 @@ class UserStore{
             localStorage.setItem('user', JSON.stringify(user));
         else
             localStorage.removeItem('user');
-        console.log("this.user:", this.user);
     }
 
     private getUserFromLocalStorage():User|null{

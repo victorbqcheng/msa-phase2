@@ -27,7 +27,6 @@ const UserProfile = () => {
         const url = apiUrl + `Posts/author/${userStore.user?.id}`;
         axios.get(url)
             .then(response => {
-                console.log("response:", response);
                 setPosts(response.data);
             })
             .catch(error => {
