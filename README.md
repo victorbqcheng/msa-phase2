@@ -8,6 +8,8 @@ Backend: https://msa-phrase-backend20240715.azurewebsites.net/
 
 Containerized backend: https://containerized-msaphase2backend.azurewebsites.net/
 
+**Note: Since the database uses Azure's free tier, data may not be retrieved on the first attempt. Wait for approximately 1 minute, then refresh the page to obtain the data.**
+
 # 2. Running locally
 
 Prerequisites: nodejs, vs community 2022, SQL Server 2022 Developer, dotnet-ef
