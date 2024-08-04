@@ -85,7 +85,7 @@ const CreateEditPost = () => {
                     <Typography variant="h4" component="h1" gutterBottom>
                         {location.state ? 'Edit ' : 'Create '}Post
                     </Typography>
-                    <Box component="form" noValidate sx={{ mt: 2 }} onSubmit={handleSubmit}>
+                    <Box component="form" sx={{ mt: 2 }} onSubmit={handleSubmit}>
                         <TextField
                             margin="normal"
                             required
